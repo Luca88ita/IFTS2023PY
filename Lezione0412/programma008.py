@@ -11,7 +11,7 @@ def MCD(num, den):  # massimo comune divisore
     mcd = math.gcd(int(num), int(den))
     num = int(num / mcd)
     den = int(den / mcd)
-    return (num, den)
+    return Fraction(num, den)
 
 
 def mcm(den1, den2):  # minimo comune multiplo
@@ -36,36 +36,27 @@ class Fraction:
     def __str__(self):
         if self.denominatore == 1:
             return f"{self.numeratore}"
-        else:
-            return f"{self.numeratore}/{self.denominatore}"
+        return f"{self.numeratore}/{self.denominatore}"
 
     def __add__(self, other):
         mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
         numeratore = (self.numeratore * mult1) + (other.numeratore * mult2)
-        numeratore, denominatore = MCD(numeratore, denominatore)
-        result = Fraction(numeratore, denominatore)
-        return result
+        return MCD(numeratore, denominatore)
 
     def __sub__(self, other):
         mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
         numeratore = (self.numeratore * mult1) - (other.numeratore * mult2)
-        numeratore, denominatore = MCD(numeratore, denominatore)
-        result = Fraction(numeratore, denominatore)
-        return result
+        return MCD(numeratore, denominatore)
 
     def __mul__(self, other):
         numeratore = self.numeratore * other.numeratore
         denominatore = self.denominatore * other.denominatore
-        numeratore, denominatore = MCD(numeratore, denominatore)
-        result = Fraction(numeratore, denominatore)
-        return result
+        return MCD(numeratore, denominatore)
 
     def __truediv__(self, other):
         numeratore = self.numeratore * other.denominatore
         denominatore = self.denominatore * other.numeratore
-        numeratore, denominatore = MCD(numeratore, denominatore)
-        result = Fraction(numeratore, denominatore)
-        return result
+        return MCD(numeratore, denominatore)
 
     def __eq__(self, other):
         mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
