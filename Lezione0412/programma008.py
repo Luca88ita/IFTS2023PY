@@ -23,7 +23,10 @@ def mcm(den1, den2):  # minimo comune multiplo
 
 
 class Fraction:
-    def __init__(self, numeratore, denominatore=1):
+    def __init__(self, numeratore: float, denominatore=1.0):
+        while numeratore % 1 > 0 or denominatore % 1 > 0:
+            numeratore = numeratore * 10
+            denominatore = denominatore * 10
         if denominatore < 0:
             self.numeratore = -numeratore
             self.denominatore = -denominatore
@@ -95,16 +98,16 @@ class Fraction:
         return False
 
 
-a = Fraction(5, -2)
+a = Fraction(7.5, -2)
 b = Fraction(-3, -2)
 
-c = d = Fraction(-1, 4)
-d = Fraction(1, 8)
+c = d = Fraction(-1, 4)  # maggiore
+d = Fraction(-1.5, 4)  # minore
 
-print(f"Moltiplicazione = {a * b}")  # -15/4
-print(f"Somma = {a + b}")  # -1/1
-print(f"Divisione = {a / b}")  # -5/3
-print(f"Sottrazione = {a - b}")  # -4/1
+print(f"Moltiplicazione = {a * b}")  # -45/8
+print(f"Somma = {a + b}")  # -9/4
+print(f"Divisione = {a / b}")  # -5/2
+print(f"Sottrazione = {a - b}")  # -21/4
 print(f"Uguaglianza = {c == d}")  # False
 print(f"Disuguaglianza = {c != d}")  # True
 print(f"Maggiore => {c > d}")
