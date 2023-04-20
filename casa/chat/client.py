@@ -32,7 +32,7 @@ def receive():
 # Sending Messages To Server
 def write():
     while True:
-        message = "{}: {}".format(nickname, input(f"{nickname}: "))
+        message = "{}: {}".format(nickname, input(""))
         client.send(message.encode("ascii"))
 
 
