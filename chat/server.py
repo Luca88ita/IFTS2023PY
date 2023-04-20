@@ -3,14 +3,16 @@ utenti = {}
 
 
 # sviluppo l'applicazione
-def app(msg):
+def app(addr, msg):
     command = msg[0:2]
     payload = msg[2:]
     if command == "/r":
         # TODO registrare l'utente
         utenti[payload] = addr
-        for nome, addr in utenti.items():
-            server_socket.sendto(f"Server: {nome}: sta partecipando alla chat", addr)
+        for nome, add in utenti.items():
+            server_socket.sendto(
+                f"Server: {nome}: sta partecipando alla chat".encode(), add
+            )
 
     elif command == "/m":
         # TODO leggere il messaggio e inoltrarlo
@@ -33,7 +35,7 @@ def app(msg):
 
 import socket
 
-UDP_IP_ADDRESS = "192.168.10.202"
+UDP_IP_ADDRESS = "192.168.0.152"
 UDP_PORT_NO = 12000
 
 server_socket = socket.socket(

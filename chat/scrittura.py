@@ -1,6 +1,6 @@
 import socket
 
-UDP_IP = "192.168.10.61"  # 202"
+UDP_IP = "192.168.0.152"
 UDP_PORT = 12000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
