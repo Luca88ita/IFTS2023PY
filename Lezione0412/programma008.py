@@ -7,93 +7,97 @@
 import math
 
 
-def MCD(num, den):  # massimo comune divisore
-    mcd = math.gcd(int(num), int(den))
-    num = int(num / mcd)
-    den = int(den / mcd)
-    return Fraction(num, den)
+def MCD(numeratore, denominatore):
+    return math.gcd(int(numeratore), int(denominatore))
 
 
-def mcm(den1, den2):  # minimo comune multiplo
-    mcm = math.lcm(den1, den2)
-    m1 = int(mcm / den1)
-    m2 = int(mcm / den2)
-    den = den1 * m1
-    return m1, m2, den
+def MCM(denominatore1, denominatore2):
+    return math.lcm(int(denominatore1), int(denominatore2))
+
+
+def ralativeNums(Frac1, Frac2):
+    mcm = MCM(Frac1.denominatore, Frac2.denominatore)
+    num1 = Frac1.numeratore * (mcm / Frac1.denominatore)
+    num2 = Frac2.numeratore * (mcm / Frac2.denominatore)
+    return num1, num2
 
 
 class Fraction:
-    def __init__(self, numeratore: float, denominatore=1.0):
+    def __init__(self, numeratore, denominatore=1):
         while numeratore % 1 > 0 or denominatore % 1 > 0:
-            numeratore = numeratore * 10
-            denominatore = denominatore * 10
-        if denominatore < 0:
-            self.numeratore = -numeratore
-            self.denominatore = -denominatore
-        elif denominatore == 0:
-            raise ValueError("Non è possibile dividere per 0")
+            numeratore *= 10
+            denominatore *= 10
+        if denominatore == 0:
+            raise ValueError("Non si può dividere per zero")
         else:
-            self.numeratore = numeratore
-            self.denominatore = denominatore
+            mcd = MCD(numeratore, denominatore)
+            if denominatore < 0:
+                self.numeratore = int(-numeratore / mcd)
+                self.denominatore = int(-denominatore / mcd)
+            else:
+                self.numeratore = int(numeratore / mcd)
+                self.denominatore = int(denominatore / mcd)
 
     def __str__(self):
         if self.denominatore == 1:
             return f"{self.numeratore}"
         return f"{self.numeratore}/{self.denominatore}"
 
-    def __add__(self, other):
-        mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
-        numeratore = (self.numeratore * mult1) + (other.numeratore * mult2)
-        return MCD(numeratore, denominatore)
-
-    def __sub__(self, other):
-        mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
-        numeratore = (self.numeratore * mult1) - (other.numeratore * mult2)
-        return MCD(numeratore, denominatore)
-
     def __mul__(self, other):
-        numeratore = self.numeratore * other.numeratore
-        denominatore = self.denominatore * other.denominatore
-        return MCD(numeratore, denominatore)
+        num = self.numeratore * other.numeratore
+        den = self.denominatore * other.denominatore
+        return Fraction(num, den)
 
     def __truediv__(self, other):
-        numeratore = self.numeratore * other.denominatore
-        denominatore = self.denominatore * other.numeratore
-        return MCD(numeratore, denominatore)
+        num = self.numeratore * other.denominatore
+        den = self.denominatore * other.numeratore
+        return Fraction(num, den)
+
+    def __add__(self, other):
+        den = MCM(self.denominatore, other.denominatore)
+        num1, num2 = ralativeNums(self, other)
+        num = num1 + num2
+        return Fraction(num, den)
+
+    def __sub__(self, other):
+        den = MCM(self.denominatore, other.denominatore)
+        num1, num2 = ralativeNums(self, other)
+        num = num1 - num2
+        return Fraction(num, den)
 
     def __eq__(self, other):
-        mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
-        if (self.numeratore * mult1) == (other.numeratore * mult2):
+        num1, num2 = ralativeNums(self, other)
+        if num1 == num2:
             return True
         return False
 
     def __ne__(self, other):
-        mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
-        if (self.numeratore * mult1) != (other.numeratore * mult2):
+        num1, num2 = ralativeNums(self, other)
+        if num1 != num2:
             return True
         return False
 
     def __lt__(self, other):
-        mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
-        if (self.numeratore * mult1) < (other.numeratore * mult2):
+        num1, num2 = ralativeNums(self, other)
+        if num1 < num2:
             return True
         return False
 
     def __gt__(self, other):
-        mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
-        if (self.numeratore * mult1) > (other.numeratore * mult2):
+        num1, num2 = ralativeNums(self, other)
+        if num1 > num2:
             return True
         return False
 
     def __le__(self, other):
-        mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
-        if (self.numeratore * mult1) <= (other.numeratore * mult2):
+        num1, num2 = ralativeNums(self, other)
+        if num1 <= num2:
             return True
         return False
 
     def __ge__(self, other):
-        mult1, mult2, denominatore = mcm(self.denominatore, other.denominatore)
-        if (self.numeratore * mult1) >= (other.numeratore * mult2):
+        num1, num2 = ralativeNums(self, other)
+        if num1 >= num2:
             return True
         return False
 
@@ -114,3 +118,5 @@ print(f"Maggiore => {c > d}")
 print(f"Minore => {c < d}")
 print(f"Maggiore o uguale => {c >= d}")
 print(f"Minore o uguale => {c <= d}")
+print(f"Somma = {a * b + c + d}")
+print(f"Uguaglianza = {c == d}")  # False

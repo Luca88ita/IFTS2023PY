@@ -19,8 +19,8 @@ def app(addr, msg):
         index = payload.find("\n")
         nome = payload[:index]
         messaggio = payload[index + 1 :]
-        for nome, addr in utenti.items():
-            server_socket.sendto(f"{nome}: {messaggio}".encode(), addr)
+        for nome, add in utenti.items():
+            server_socket.sendto(f"{nome}: {messaggio}".encode(), add)
 
     elif command == "/l":
         # TODO leggere solo se non va in porto prima
@@ -28,6 +28,9 @@ def app(addr, msg):
 
     elif command == "/e":
         # TODO loggoutare
+        pass
+    else:
+        # TODO ritornare messaggio con comando non valido
         pass
 
     return f"utente: {utenti}"
