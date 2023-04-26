@@ -11,13 +11,15 @@
 
       let n1 = num1.value; // stessa cosa di scrivere document.getElementById("numero1").value
       let n2 = num2.value;
+      let op = operation.value;
 
       await fetch("/calcolatriceAPI",{
         headers: {"Content-Type": "application/json",},
         method:"POST",
         body:JSON.stringify({
           "num1":n1,
-          "num2":n2
+          "num2":n2,
+          "operation":op
         })
       })
       .then((data)=>data.json())
@@ -33,7 +35,13 @@
     <input type="number" name="num1" id="num1"><br>
     <label for="num2">Inserisci il primo numero</label>
     <input type="number" name="num2" id="num2"><br>
-    <button>+</button>
+    <input type="hidden" name="operation" id="operation">
+    <button onclick="operation.value='+'">+</button>
+    <button onclick="operation.value='-'">-</button>
+    <button onclick="operation.value='*'">*</button>
+    <button onclick="operation.value='/'">/</button>
+    <button onclick="operation.value='^'">^</button>
+    <button onclick="operation.value='root'">root</button>
     <h2 id="result"></h2>
   </form>
 </body>

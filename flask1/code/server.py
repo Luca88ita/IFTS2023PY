@@ -1,5 +1,6 @@
 import flask
 import json
+import math
 
 app = flask.Flask(__name__)
 
@@ -45,10 +46,27 @@ def calcolatriceAPI():
 
     num1 = float(JSON["num1"])
     num2 = float(JSON["num2"])
-
-    result = num1 + num2
+    op = JSON["operation"]
+    if op == "+":
+        result = num1 + num2
+    if op == "-":
+        result = num1 - num2
+    if op == "*":
+        result = num1 * num2
+    if op == "/":
+        result = num1 / num2
+    if op == "^":
+        result = math.pow(num1, num2)
+    if op == "root":
+        result = math.pow(num1, (1 / num2))
 
     return json.dumps(result)
+
+
+@app.route("/static/<path:path>")
+def send_static(path):
+    print(path)
+    return flask.send_from_directory("static", path)
 
 
 app.run("0.0.0.0", 8080, True)
