@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista della spesa</title>
-  <script>
-    let cart = [];
-    addProduct = (event)=>{
-      event.preventDefault();
-      let product = prodottoTXT.value;
-      cart.push(product);
-      stampa();
-    }
-    stampa = () =>{
-      cartUL.innerHTML="";
-      for (let item of cart){
-        cartUL.innerHTML+=`<li>${item}</li>`;
-      }
-    }
-  </script>
-</head>
-<body>
-  <form onsubmit="addProduct()">
-    <label for="prodottoTXT">Inserisci un prodotto alla lista della spesa</label>
-    <input type="text" id="prodottoTXT" name="prodottoTXT">
-    <button>Aggiungi</button>
-  </form>
-  <ul id="cartUL">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Lista della spesa</title>
+		<script>
+			let cart = [];
 
-  </ul>
-</body>
+			addProduct = () => {
+				let product = prodottoTXT.value;
+				cart.push(product);
+				stampa();
+				event.preventDefault();
+			};
+			stampa = () => {
+				cartUL.innerHTML = '';
+				for (let item of cart) {
+					cartUL.innerHTML += `<li>${item}</li>`;
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<form onsubmit="addProduct()">
+			<label for="prodottoTXT"
+				>Inserisci un prodotto alla lista della spesa</label
+			>
+			<input type="text" id="prodottoTXT" name="prodottoTXT" />
+			<button>Aggiungi</button>
+		</form>
+		<ul id="cartUL"></ul>
+	</body>
 </html>
