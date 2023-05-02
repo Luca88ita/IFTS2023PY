@@ -1,0 +1,59 @@
+html, body{
+  background-color: aquamarine;
+  margin: 0;
+  padding: 2rem 5rem;
+}
+#prodottoTXT{
+  display: block;
+  margin: auto;
+}
+form{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 0.5rem;
+}
+form>button{
+  background-color: #ffd700;
+  padding: 0.25rem 0.5rem;
+  border-color: #ffff00;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 150ms ease;
+  box-shadow: 0 2px 5px #00000033;
+}
+form>button:hover{
+  background-color: #ffd700BB;
+  border-color: #ffff00BB;
+}
+form>button:active{
+  background-color: #aefe00;
+  box-shadow: 0 1px 2px #00000033;
+}
+.blur{
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  position: absolute;
+  left: 0;
+  top: 0;
+  backdrop-filter: blur(5px);
+}
+
+@keyframes fadeIn {
+  0% {
+    translate: 0rem 0;
+  }
+  50% {
+    translate: -4rem 0;
+  }
+  100% {
+    translate: 0;
+  }
+}
+
+li{
+  translate: 0;
+  animation: fadeIn 2000ms ease 500ms 2;
+}
