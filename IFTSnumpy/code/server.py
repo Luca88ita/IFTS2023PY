@@ -10,23 +10,13 @@ def index():
     return flask.render_template("upload.html")
 
 
+@app.route("/uploader/", methods=["POST"])
 @app.route("/uploader/<path:path>", methods=["POST"])
-def uploader(path):
+def uploader(path=""):
     uploaded = flask.request.files.getlist("file")
     for f in uploaded:
         f.save(f"uploads/{path}{f.filename}")
         print(f"uploads/{path}{f.filename}")
-    return json.dumps(
-        {"success": True, "message": "Caricamento avvenuto con successo!"}
-    )
-
-
-@app.route("/uploadernopath", methods=["POST"])
-def uploadernopath():
-    uploaded = flask.request.files.getlist("file")
-    for f in uploaded:
-        f.save(f"uploads/{f.filename}")
-        print(f"uploads/{f.filename}")
     return json.dumps(
         {"success": True, "message": "Caricamento avvenuto con successo!"}
     )

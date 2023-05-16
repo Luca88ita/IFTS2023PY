@@ -97,15 +97,9 @@
         for (let i = 0; i < files.length; i++) {
           formData.append("file", files[i]);
         }
-        if (cartellaCorrente === "") {
-          postFile(`/uploadernopath`, formData).then((data) => {
-            readFolder(cartellaCorrente);
-          });
-        } else {
-          postFile(`/uploader/${cartellaCorrente}`, formData).then((data) => {
-            readFolder(cartellaCorrente);
-          });
-        }
+        postFile(`/uploader/${cartellaCorrente}`, formData).then((data) => {
+          readFolder(cartellaCorrente);
+        });
       }
     </script>
   </head>
