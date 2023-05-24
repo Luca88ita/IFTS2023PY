@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MNIST Character Sampling</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <script>
+    // Example POST method implementation:
+    async function postData(url = "", data = {}) {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      });
+      return response.json(); // parses JSON response into native JavaScript objects
+    }
+  </script>
+  <body>
+    <canvas id="canvas" width="280" height="280"></canvas>
+    <br />
+    <script>
+      var canvas = document.getElementById("canvas");
+      var context = canvas.getContext("2d");
+      var isDrawing = false;
+
+      // Add event listeners for mouse actions
+      canvas.addEventListener("mousedown", startDrawing);
+      canvas.addEventListener("mousemove", draw);
+      canvas.addEventListener("mouseup", stopDrawing);
+      canvas.addEventListener("mouseleave", stopDrawing);
+
+      // Function to start drawing
+      function startDrawing(event) {
+        isDrawing = true;
+        draw(event);
+      }
+
+      // Function to draw on the canvas
+      function draw(event) {
+        if (!isDrawing) return;
+        context.fillRect(event.offsetX, event.offsetY, 20, 20);
+      }
+
+      // Function to stop drawing
+      function stopDrawing() {
+        isDrawing = false;
+      }
+
+      // Function to sample the character
+      function sampleCharacter() {
+        // Resize the canvas to 28x28 pixels
+        var resizedCanvas = document.createElement("canvas");
+        resizedCanvas.width = 28;
+        resizedCanvas.height = 28;
+        var resizedContext = resizedCanvas.getContext("2d");
+        resizedContext.drawImage(canvas, 0, 0, 28, 28);
+
+        // Get the image data of the resized canvas
+        var imageData = resizedContext.getImageData(0, 0, 28, 28).data;
+
+        // Convert the image data to grayscale and normalize the values
+        var grayscaleData = [];
+        for (let i = 0; i < imageData.length; i += 4) {
+          var a = imageData[i + 3];
+          var grayValue = a / 255;
+          grayscaleData.push(grayValue);
+        }
+
+        // Pass the grayscale data to your MNIST model for prediction
+        // Here, you can send the data to your server or perform client-side inference
+        console.log();
+
+        postData("/predict", {
+          image: grayscaleData,
+        }).then((data) => {
+          console.log(data);
+        });
+      }
+    </script>
+    <button onclick="sampleCharacter()">Sample Character</button>
+  </body>
+</html>
